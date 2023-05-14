@@ -2,6 +2,21 @@ import { StyleSheet, Text, View,Image } from 'react-native'
 import React from 'react'
 import tweets from '../assets/data/tweets'
 import {TweetType} from '../types'
+import { Entypo,EvilIcons } from '@expo/vector-icons'
+
+type IconButtonProps={
+  icon:React.ComponentProps<typeof EvilIcons>['name'],
+  text?:number|string
+}
+
+const IconButton =({icon,text}:IconButtonProps)=>(
+  
+  <View style={{flexDirection:'row',alignItems:'center'}}>
+    <EvilIcons name={icon} size={22} color={'gray'}/>
+    <Text style={{fontSize:12,color:'gray'}}>{text}</Text>
+  </View>
+
+)
 
 type TweetProps={
     tweet:TweetType;
@@ -13,14 +28,30 @@ type TweetProps={
 const Tweet = ({tweet}:TweetProps) => {
     
   return (
-    <View style={styles.container}>
+<View style={styles.container}>
     <Image src={tweet.user.image} style={styles.userImage}/>
 
-<View style={styles.mainC}>
-<Text style={styles.name}>{tweet.user.name}</Text>
-<Text style={styles.content}>{tweet.content}</Text>
-</View>
-  
+    <View style={styles.mainC}>
+      <View style={{flexDirection:'row'}}>
+      <Text style={styles.name}>{tweet.user.name}</Text>
+      <Text style={styles.Username}>{tweet.user.username} 2hrs</Text>
+      <Entypo name='dots-three-horizontal' size={24} color={"gray"} style={{marginLeft:"auto"}} />
+      </View>
+      
+
+      <Text style={styles.content}>{tweet.content}</Text>
+
+      {tweet.image && <Image src={tweet.image} style={styles.image}/>}
+      <View style={styles.footer}>
+    <IconButton icon='comment' text={tweet.numberOfComments}/>
+    <IconButton icon='retweet' text={tweet.numberOfRetweets}/>
+    <IconButton icon='heart' text={tweet.numberOfLikes}/>
+    <IconButton icon='chart' text={tweet.impressions || 0}/>
+    <IconButton icon='share-apple' />
+
+    </View>
+    </View>
+      
 
 </View>
   )
@@ -55,9 +86,24 @@ const styles = StyleSheet.create({
       name:{
         fontWeight:'600'
       },
+      Username:{
+        color:'gray',
+        marginLeft:10
+      },
       content:{
         lineHeight:20,
         marginTop:5
+      },
+      image:{
+        width:'100%',
+        aspectRatio:16/9,
+        marginVertical:10,
+        borderRadius:15
+      },
+      footer:{
+        flexDirection:'row',
+        marginVertical:5,
+justifyContent:"space-between"
       }
     
   });
