@@ -1,23 +1,30 @@
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet,View,FlatList } from 'react-native';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+
+import tweets from '../../assets/data/tweets';
+import Tweet from '../../components/tweet';
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <View style={{backgroundColor:'white',flex:1}}>
+      {/* <Tweet tweet={tweets[0]}/> */}
+      <FlatList data={tweets}
+      renderItem={({item})=><Tweet tweet={item}/>}
+      />
+      
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  
+
+    flexDirection:'row',
+    padding:10,
+    borderBottomWidth:StyleSheet.hairlineWidth,
+    borderColor:'lightgrey'
   },
   title: {
     fontSize: 20,
@@ -28,4 +35,18 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  userImage:
+    {width:50,height:50,borderRadius:25},
+    mainC:{
+      marginLeft:10,
+      flex:1
+    },
+    name:{
+      fontWeight:'600'
+    },
+    content:{
+      lineHeight:20,
+      marginTop:5
+    }
+  
 });
